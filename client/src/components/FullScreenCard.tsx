@@ -21,18 +21,7 @@ export const FullScreenCard = ({ children }: FullScreenCardProps) => {
 };
 
 FullScreenCard.Body = ({ children }: FullScreenCardProps) => {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Card Title</CardTitle>
-        <CardDescription>Card Description</CardDescription>
-      </CardHeader>
-      <CardContent>{children}</CardContent>
-      <CardFooter>
-        <p>Card Footer</p>
-      </CardFooter>
-    </Card>
-  );
+  return <Card>{children}</Card>;
 };
 
 FullScreenCard.BelowCard = ({ children }: FullScreenCardProps) => {
