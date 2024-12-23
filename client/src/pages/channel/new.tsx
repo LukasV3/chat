@@ -112,7 +112,7 @@ export const NewChannel = () => {
                 isLoading={users.isPending}
                 options={users.data?.users.map((user) => {
                   return {
-                    label: user.name,
+                    label: user.name || user.id,
                     value: user.id,
                   };
                 })}
