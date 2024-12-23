@@ -12,6 +12,7 @@ export const AuthLayout = () => {
       <FullScreenCard.Body>
         <Outlet />
       </FullScreenCard.Body>
+
       <FullScreenCard.BelowCard>
         <Button variant="link" asChild>
           <Link to={isLoginPage ? "/signup" : "/login"}>

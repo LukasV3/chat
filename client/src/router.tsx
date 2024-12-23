@@ -5,6 +5,7 @@ import { Signup } from "./pages/Signup";
 import { AuthProvider } from "./context/AuthContext";
 import { RootLayout } from "./pages/layouts/RootLayout";
 import { Home } from "./pages/Home";
+import { NewChannel } from "./pages/channel/new";
 
 const ContextWrapper = () => {
   return (
@@ -27,7 +28,7 @@ export const router = createBrowserRouter([
           },
           {
             path: "/channel",
-            children: [{ path: "new", element: <h1>New Channel</h1> }],
+            children: [{ path: "new", element: <NewChannel /> }],
           },
         ],
       },
