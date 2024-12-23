@@ -24,6 +24,11 @@ export const useAuth = () => {
   return useContext(AuthContext) as AuthContextType;
 };
 
+export const useLoggedInAuth = () => {
+  return useContext(AuthContext) as AuthContextType &
+    Required<Pick<AuthContextType, "user">>;
+};
+
 type AuthProviderProps = {
   children: ReactNode;
 };
@@ -58,7 +63,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   useEffect(() => {
     if (token == null || user == null) return;
 
-    const chat = new StreamChat(process.env.VITE_STREAM_API_KEY!);
+    const chat = new StreamChat(import.meta.env.VITE_STREAM_API_KEY!);
 
     if (chat.tokenManager.token === token && chat.userID === user.id) return;
 
