@@ -4,6 +4,7 @@ import { createContext, ReactNode, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { StreamChat } from "stream-chat";
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
 type AuthContextType = {
   user?: User;
@@ -35,8 +36,8 @@ type AuthProviderProps = {
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const navigate = useNavigate();
-  const [user, setUser] = useState<User>();
-  const [token, setToken] = useState<string>();
+  const [user, setUser] = useLocalStorage<User>("user");
+  const [token, setToken] = useLocalStorage<string>("token");
   const [streamChat, setStreamChat] = useState<StreamChat>();
 
   const signup = useMutation({
