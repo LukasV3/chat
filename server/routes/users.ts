@@ -23,15 +23,10 @@ const userRoutes = (app: FastifyInstance) => {
           return reply.status(400).send("User ID taken");
         }
 
-        serverClient.upsertUser({ id, name, image });
-
-        // const feedToken = feedClient.createUserToken(userId);
-        const chatToken = serverClient.createToken(id);
-
-        reply.status(200).send({ chatToken, name, id });
+        await serverClient.upsertUser({ id, name, image });
       } catch (error) {
         console.error(error);
-        // reply.status(500).send();
+        reply.status(500).send();
       }
     }
   );
