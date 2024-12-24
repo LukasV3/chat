@@ -64,24 +64,14 @@ const Channels = ({ loadedChannels }: ChannelListMessengerProps) => {
 
       {loadedChannels != null && loadedChannels.length > 0
         ? loadedChannels.map((channel) => {
-            const isActive = channel === activeChannel;
-
             return (
-              <Button
+              <ChannelItemPreview
                 key={channel.id}
-                onClick={() => setActiveChannel(channel)}
-                className="w-full"
-                disabled={isActive}
-                variant={isActive ? "default" : "ghost"}
-              >
-                {channel.data?.image && (
-                  <img
-                    src={channel.data.image}
-                    className="w-10 h-10 rounded-full object-center object-cover"
-                  />
-                )}
-                {channel.data?.name || channel.id}
-              </Button>
+                image={channel.data?.image}
+                name={channel.data?.name}
+                isActive={channel === activeChannel}
+                handleClick={() => setActiveChannel(channel)}
+              />
             );
           })
         : "No Conversations"}
@@ -97,5 +87,34 @@ const Channels = ({ loadedChannels }: ChannelListMessengerProps) => {
         Logout
       </Button>
     </SheetContent>
+  );
+};
+
+const ChannelItemPreview = ({
+  image,
+  name,
+  isActive,
+  handleClick,
+}: {
+  image?: string;
+  name?: string;
+  isActive: boolean;
+  handleClick: () => void;
+}) => {
+  return (
+    <Button
+      onClick={handleClick}
+      className="w-full"
+      disabled={isActive}
+      variant={isActive ? "default" : "ghost"}
+    >
+      {image && (
+        <img
+          src={image}
+          className="w-10 h-10 rounded-full object-center object-cover"
+        />
+      )}
+      {name || "Unnamed Channel"}
+    </Button>
   );
 };
