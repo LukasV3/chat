@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { StreamChat } from "stream-chat";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
+import type { User } from "@/lib/definitions";
 
 type AuthContextType = {
   user?: User;
@@ -12,12 +13,6 @@ type AuthContextType = {
   signup: UseMutationResult<AxiosResponse, unknown, User>;
   login: UseMutationResult<{ token: string; user: User }, unknown, string>;
   logout: UseMutationResult<AxiosResponse, unknown, void>;
-};
-
-type User = {
-  id: string;
-  name: string;
-  image?: string;
 };
 
 const AuthContext = createContext<AuthContextType | null>(null);
