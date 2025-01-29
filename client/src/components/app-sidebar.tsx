@@ -88,8 +88,11 @@ export function AppSidebar({ user }: AppSidebarProps) {
       </Sidebar>
 
       {/* second sidebar */}
-      <Sidebar collapsible="none" className="hidden flex-1 md:flex">
-        <SidebarHeader className="gap-3.5 border-b p-4">
+      <Sidebar
+        collapsible="none"
+        className="hidden flex-1 md:flex bg-background"
+      >
+        <SidebarHeader className="gap-3.5 px-4 pt-4">
           <div className="flex w-full items-center justify-between">
             <div className="text-base font-medium text-neutral-950 dark:text-neutral-50">
               Chats
@@ -118,7 +121,7 @@ export function AppSidebar({ user }: AppSidebarProps) {
 
         <SidebarContent>
           <SidebarGroup className="px-0">
-            <SidebarGroupContent>
+            <SidebarGroupContent className="[&>div]:border-none">
               <ChannelList
                 List={Channels}
                 Preview={ChannelItemPreview}
@@ -164,7 +167,7 @@ const ChannelItemPreview = ({
     <Button
       onClick={() => setActiveChannel?.(channel)}
       className={cn(
-        "h-auto rounded-none border-b p-4 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
+        "h-auto px-2 mx-2 my-0.5 py-2 text-sm leading-tight last:border-b-0 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
         {
           "bg-sidebar-accent": isActive,
         }
@@ -192,7 +195,7 @@ const ChannelItemPreview = ({
           */}
         </div>
 
-        <span className="text-left line-clamp-1 w-[200px] whitespace-break-spaces text-xs">
+        <span className="text-left line-clamp-1 w-[200px] whitespace-break-spaces text-xs text-muted-foreground">
           {latestMessagePreview}
         </span>
       </div>

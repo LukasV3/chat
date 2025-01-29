@@ -33,7 +33,7 @@ export const Home = () => {
         <AppSidebar user={user} />
 
         <SidebarInset>
-          <header className="sticky top-0 flex shrink-0 items-center gap-2 border-b bg-background p-4">
+          <header className="sticky top-0 z-10 flex shrink-0 items-center gap-2 border-b bg-primary-foreground px-4 py-1 [&_.str-chat\_\_channel-header]:bg-primary-foreground">
             <SidebarTrigger className="-ml-1" />
 
             <Separator orientation="vertical" className="mr-2 h-4" />
@@ -49,7 +49,7 @@ export const Home = () => {
             <Window>
               <MessageList />
 
-              <div className="sticky bottom-0 border-t bg-background p-4">
+              <div className="sticky bottom-0 border-t bg-primary-foreground p-4 [&_.str-chat\_\_message-input]:bg-primary-foreground">
                 <MessageInput />
               </div>
             </Window>
