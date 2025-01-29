@@ -2,18 +2,19 @@ import { useLoggedInAuth } from "@/context/AuthContext";
 import {
   Channel,
   ChannelHeader,
-  ChannelList,
   Chat,
   Window,
   LoadingIndicator,
   MessageList,
   MessageInput,
-  ChannelListMessengerProps,
-  ChannelPreviewUIComponentProps,
 } from "stream-chat-react";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import { useNavigate } from "react-router-dom";
+import { AppSidebar } from "@/components/app-sidebar";
+import { Separator } from "@/components/ui/separator";
+import {
+  SidebarInset,
+  SidebarProvider,
+  SidebarTrigger,
+} from "@/components/ui/sidebar";
 
 export const Home = () => {
   const { user, streamChat } = useLoggedInAuth();
@@ -21,111 +22,40 @@ export const Home = () => {
   if (streamChat == null) return <LoadingIndicator />;
 
   return (
-    <Chat client={streamChat}>
-      <Sheet>
-        <ChannelList
-          List={Channels}
-          Preview={ChannelItemPreview}
-          sendChannelsToList
-          filters={{ members: { $in: [user.id] } }}
-        />
-        <Channel>
-          <div className="px-6 pb-6 w-full h-screen">
-            <Window>
-              <div className="flex items-center justify-between py-4 border-b">
-                <ChannelHeader />
-
-                <Button variant="outline" asChild>
-                  <SheetTrigger>Menu</SheetTrigger>
-                </Button>
-              </div>
-
-              <MessageList />
-              <MessageInput />
-            </Window>
-          </div>
-        </Channel>
-      </Sheet>
-    </Chat>
-  );
-};
-
-const Channels = ({
-  children,
-  loadedChannels,
-}: React.PropsWithChildren<ChannelListMessengerProps>) => {
-  const navigate = useNavigate();
-  const { logout } = useLoggedInAuth();
-
-  return (
-    <SheetContent side="right" className="flex flex-col pt-12">
-      <Button onClick={() => navigate("/channel/new")} className="w-full">
-        New Conversation
-      </Button>
-
-      <hr className="border-gray-100" />
-
-      {loadedChannels != null && loadedChannels.length > 0 ? (
-        <div>
-          <p className="text-gray-500 font-light mb-2">
-            {loadedChannels.length}{" "}
-            {loadedChannels.length === 1 ? "conversation" : "conversations"}:
-          </p>
-
-          <div className="flex flex-col gap-2">{children}</div>
-        </div>
-      ) : (
-        <p className="text-gray-500 font-light">
-          "🤷 You have no conversations... yet"
-        </p>
-      )}
-
-      <hr className="border-gray-100 mt-auto" />
-
-      <Button
-        variant="secondary"
-        onClick={() => logout.mutate()}
-        disabled={logout.isPending}
-        className="w-full"
-      >
-        Logout
-      </Button>
-    </SheetContent>
-  );
-};
-
-const ChannelItemPreview = ({
-  channel,
-  activeChannel,
-  displayImage,
-  displayTitle,
-  latestMessagePreview,
-  setActiveChannel,
-}: ChannelPreviewUIComponentProps) => {
-  const isActive = channel.id === activeChannel?.id;
-
-  return (
-    <Button
-      onClick={() => setActiveChannel?.(channel)}
-      className="w-full h-min justify-start"
-      disabled={isActive}
-      variant={isActive ? "secondary" : "ghost"}
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "350px",
+        } as React.CSSProperties
+      }
     >
-      <div className="flex h-14 w-14 shrink-0 overflow-hidden rounded-full mr-2">
-        {displayImage ? (
-          <img src={displayImage} className="aspect-square h-full w-full" />
-        ) : (
-          <div className="flex h-full w-full items-center justify-center rounded-full bg-blue-100 text-lg">
-            {displayTitle && displayTitle[0].toUpperCase()}
-          </div>
-        )}
-      </div>
+      <Chat client={streamChat}>
+        <AppSidebar user={user} />
 
-      <div className="flex flex-col gap-0.5 text-left truncate">
-        <p className="font-bold">{displayTitle || "Unnamed Channel"}</p>
+        <SidebarInset>
+          <header className="sticky top-0 z-10 flex shrink-0 items-center gap-2 border-b bg-primary-foreground px-4 py-1 [&_.str-chat\_\_channel-header]:bg-primary-foreground">
+            <SidebarTrigger className="-ml-1" />
 
-        <p className=" text-gray-500 font-light">{latestMessagePreview}</p>
-      </div>
-    </Button>
+            <Separator orientation="vertical" className="mr-2 h-4" />
+
+            <Channel>
+              <Window>
+                <ChannelHeader />
+              </Window>
+            </Channel>
+          </header>
+
+          <Channel>
+            <Window>
+              <MessageList />
+
+              <div className="sticky bottom-0 border-t bg-primary-foreground p-4 [&_.str-chat\_\_message-input]:bg-primary-foreground">
+                <MessageInput />
+              </div>
+            </Window>
+          </Channel>
+        </SidebarInset>
+      </Chat>
+    </SidebarProvider>
   );
 };
