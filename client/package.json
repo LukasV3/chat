@@ -30,7 +30,7 @@
     "react-select": "^5.9.0",
     "stream-chat": "^8.48.0",
     "stream-chat-react": "^12.8.1",
-    "tailwind-merge": "^2.5.5",
+    "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
