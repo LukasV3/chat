@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Inbox, SquarePen } from "lucide-react";
-import { NavUser } from "@/components/nav-user";
+import { NavUser } from "@/components/NavUser";
 import {
   Sidebar,
   SidebarContent,
